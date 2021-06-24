@@ -26,11 +26,11 @@ const getDataFromCourse = (course_id) => {
             const tbody = $(refined)[0];
             Object.values(tbody.children).map(elem => {
                 const tds = Object.values(elem.children);
-                const val1 = tds[1].children[1].innerText;
-                const val2 = tds[2].children[1].innerText;
-                const val3 = tds[7].children[1].innerText;
-                console.log(val1, val2, val3);
-                resolve({ val1, val2, val3 });
+                const week = tds[1].children[1].innerText;
+                const contentname = tds[2].children[1].innerText;
+                const pass = tds[7].children[1].innerText;
+                console.log(week, contentname, pass);
+                resolve({ week, contentname, pass });
             });
         });
     });
@@ -38,13 +38,23 @@ const getDataFromCourse = (course_id) => {
 
 const main = async () => {
     const arr = (await getStorageData('myList')).split(',');
+    const refined = [];
 
-
-    arr.map(async elem => {
-        await getDataFromCourse(elem);
-    });
+    await new Promise((resolve, reject) =>{
+        for (let i = 0 ; i < arr.length; i++){
+            setTimeout(async () =>{
+                refined.push(await getDataFromCourse(arr[i]));
+            }, i * 100);
+        }
+        
+        setTimeout(()=>{
+            resolve();
+        }, arr.length * 100 + 1000);
+    })
     
+    console.log(refined);
+
+    document.body.innerText = JSON.stringify(refined[0]);
 };
 
-
-main();
+main()

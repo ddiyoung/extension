@@ -3,8 +3,6 @@ function getCourseIdList(){
     const list = [].slice.call(nodes);
     return list.map(elem => elem.innerText);
 }
-var divA = document.createElement('div');
-var myList = getCourseIdList().join();
-divA.innerHTML = myList;
 
+var myList = getCourseIdList().join();
 chrome.storage.local.set({ myList });
