@@ -5,8 +5,8 @@ chrome.tabs.executeScript({
 const getStorageData = (str) => {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get(str, (res) => {
-            if (res.myList) {
-                resolve(res.myList);
+            if (res[str]) {
+                resolve(res[str]);
             }
             reject();
         });
@@ -24,20 +24,21 @@ const getDataFromCourse = (course_id) => {
     
             const refined = data.slice(idx, idx2 + str2.length);
             const tbody = $(refined)[0];
+            const subject = [];
             Object.values(tbody.children).map(elem => {
                 const tds = Object.values(elem.children);
                 const week = tds[1].children[1].innerText;
                 const contentname = tds[2].children[1].innerText;
                 const pass = tds[7].children[1].innerText;
-                console.log(week, contentname, pass);
-                resolve({ week, contentname, pass });
+                subject.push({week, contentname, pass});
             });
+            resolve(subject);
         });
     });
 }
 
 const main = async () => {
-    const arr = (await getStorageData('myList')).split(',');
+    const arr = (await getStorageData('CourseList')).split(',');
     const refined = [];
 
     await new Promise((resolve, reject) =>{
@@ -51,9 +52,7 @@ const main = async () => {
             resolve();
         }, arr.length * 100 + 1000);
     })
-    
     console.log(refined);
-
     document.body.innerText = JSON.stringify(refined[0]);
 };
 
