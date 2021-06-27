@@ -4,6 +4,11 @@
 	"description": "Print Hello, World! message",
 	"version": "1.0.0",
 	
+	"icons": {
+		"48": "ico_sju.png"
+	},
+	
+
 	"content_scripts": [
 		{
 			"matches": [
