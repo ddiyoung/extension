@@ -255,9 +255,6 @@ html {
     border: 1px solid var(--white-35)
 }
 .no-error label {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
     display: flex;
     flex-flow: row wrap;
     align-items: center;
