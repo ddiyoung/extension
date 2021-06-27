@@ -118,14 +118,27 @@ const CompleteData = async () => {
     return Manufactured;
 }
 
+const NpData = async () =>{
+    const Data = await CompleteData();
+    const NpList = [];
+
+    Data.map(elem =>{
+        if(elem.pass === 'P') NpList.push(elem);
+    })
+
+    
+    return NpList;
+}
+
 
 const main = async () => {
 
-    const Data = await CompleteData();
-
-    console.log(Data);
+    const NpList = await NpData();
     
 
+
+
+    console.log(NpList)
 };
 
 main();
