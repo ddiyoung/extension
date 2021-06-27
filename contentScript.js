@@ -1,16 +1,22 @@
+
+
 {
-    const getCourseIdList = () => {
-        const nodes = document.querySelectorAll('.course-id span');
-        const list = [].slice.call(nodes);
-        const CourseList = list.map(elem => elem.innerText).join();
-        return CourseList;
+    const getUserId = () => {
+        const classes = document.getElementById('sidebar-user-name').className;
+        return classes.split(' ')[2].split('course_user')[1];
     }
 
-    const getSubjectNameList = () =>{
-        const nodes = document.querySelectorAll('.js-course-title-element');
-        const list = [].slice.call(nodes);
-        const SubjectNameList = list.map(elem => elem.innerText).join();
-        return SubjectNameList;
+    const getCourseIdList = () => {
+        const url = `https://blackboard.sejong.ac.kr/learn/api/v1/users/${getUserId()}/memberships?expand=course.effectiveAvailability,course.permissions,courseRole&includeCount=true&limit=10000`;
+        return new Promise((resolve, reject) => {
+            $.get(url, ({ results }) => {
+                const refined = results.filter(elem => elem.course.description).filter(elem => elem.course.term.name === '2021학년도 1학기');
+                resolve(refined.map(elem => ({
+                    courseId: elem.course.courseId,
+                    name: elem.course.name
+                })));
+            });
+        });
     }
     
     const getDataFromCourse = (course_id) => {
@@ -49,13 +55,13 @@
         return ({LectureName, Attendance, DeadLine});
     };
     
-    const getCourseData = async () =>{
-        const CourseList = getCourseIdList().split(',');
+    const getCourseData = async (courseIdList) =>{
+        const CourseList = courseIdList;
         const refined = [];
     
         await new Promise((resolve, reject) =>{
             for (let i = 0 ; i < CourseList.length; i++){
-                setTimeout(async () =>{
+                setTimeout(async () => {
                     refined.push(await getDataFromCourse(CourseList[i]));
                 }, i * 100);
             }
@@ -68,13 +74,13 @@
         return refined;
     };
     
-    const ManufactureData = async () =>{
-        const totalCourseData = (await getCourseData()); 
+    const ManufactureData = async (courseIdList) =>{
+        const totalCourseData = (await getCourseData(courseIdList)); 
         const Nowsecond = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
         const Nowtest = Nowsecond.slice(0, Nowsecond.length -3);
         const refined = [];
     
-        const Now = "2021-04-07 12:00";
+        const Now = "2021-03-07 12:00";
     
         totalCourseData.map(elem =>{
             elem.map(e =>{
@@ -89,25 +95,15 @@
     }
     
     const MergeIdName = async () =>{
-        const CourseList = getCourseIdList().split(',');
-        const NameList = getSubjectNameList().split(',');
-    
-        const MergeList = [];
-    
-        for(let i = 0 ; i < CourseList.length; i++){
-            const obj = {
-                'id' : CourseList[i],
-                'Name' : NameList[i]
-            };
-            MergeList.push(obj);
-        }
-    
-        return MergeList;
-    }
+        return (await getCourseIdList()).map(elem => ({
+            id: elem.courseId,
+            Name: elem.name
+        }));
+    };
     
     
-    const CompleteData = async () => {
-        const Manufactured = await ManufactureData();
+    const CompleteData = async (courseIdList) => {
+        const Manufactured = await ManufactureData(courseIdList);
         const MergeList = await MergeIdName();
     
         Manufactured.map(elem =>{
@@ -118,31 +114,45 @@
         return Manufactured;
     }
     
-    const NpData = async () =>{
-        const Data = await CompleteData();
-        const NpList = [];
-    
-        Data.map(elem =>{
-            if(elem.pass === 'P') NpList.push(elem);
-        })
-    
-        
-        return NpList;
+    const NpData = async (courseIdList) =>{
+        const Data = await CompleteData(courseIdList);
+        return Data.filter(elem => elem.pass === 'P');
     }
-    
-    
+
+    const getElement = (type) => document.createElement(type);
+    const setInnerText = (container, inner) => {
+        if (Array.isArray(inner)) {
+            container.innerText = inner.join(' ');
+            return container;
+        }
+        container.innerText = inner;
+        return container;
+    }
+
+    const drawDom = async (courseIdList) => {
+        const data = await NpData(courseIdList);
+        const header = document.querySelector('.base-courses-header-container');
+        const wrapper = document.createElement('div');
+        header.style.flexDirection = 'column';
+        header.style.height = 'auto';
+        console.log(data);
+
+        data.map(elem => {
+            const div = getElement('div');
+            
+            div.append(setInnerText(getElement('div'), [elem.Name, elem.LectureName]));
+            div.append(setInnerText(getElement('div'), [elem.Attendance, elem.DeadLine]));
+            div.append(setInnerText(getElement('div'), [elem.week, elem.pass]));
+            wrapper.append(div);
+        });
+
+        header.append(wrapper);
+    }
+
     const main = async () => {
+        const merged = await MergeIdName();
 
-        const NpList = await NpData();
-        
-        const Atdiv = document.createElement("div");
-        Atdiv.innerHTML = "Hello";
-        Atdiv.style.float = "right";
-
-        document.querySelector(".slick-track").appendChild(Atdiv);
-
-        console.log(NpList);
-       
+        await drawDom(merged.map(elem => elem.id));
     }
 
     main();
