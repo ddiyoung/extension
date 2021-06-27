@@ -106,9 +106,7 @@ const MergeIdName = async () =>{
 }
 
 
-
-const main = async () => {
-
+const CompleteData = async () => {
     const Manufactured = await ManufactureData();
     const MergeList = await MergeIdName();
 
@@ -117,7 +115,16 @@ const main = async () => {
         elem.Name = MergeList[index].Name;
     })
 
-    console.log(Manufactured);
+    return Manufactured;
+}
+
+
+const main = async () => {
+
+    const Data = await CompleteData();
+
+    console.log(Data);
+    
 
 };
 
