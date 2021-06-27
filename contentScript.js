@@ -132,11 +132,11 @@
     
     
     const main = async () => {
-        
 
         const NpList = await NpData();
-        console.log(NpList)
-    };
-    
+        console.log(NpList);
+       
+    }
+
     main();
 }
