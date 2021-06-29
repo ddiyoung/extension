@@ -218,6 +218,14 @@ span,
 ul {
     word-wrap: break-word
 }
+.extension-txt {
+    color: var(--white-15);
+    font-size: 14px
+}
+.extension-txt{
+    font-family: Poppins, sans-serif;
+    font-weight: var(--regular)
+}
 :root {
     --regular: 400;
     --medium: 500;
@@ -238,7 +246,8 @@ html {
 .no-error {
     display: block;
     width: 332px;
-    padding: 20px
+    padding: 20px;
+    height: 150px;
 }
 .no-error input[type=text] {
     display: block;
@@ -293,13 +302,7 @@ html {
     font-family: Poppins, sans-serif;
     font-weight: var(--bold)
 }
-.no-error .copy-val {
-    display: block;
-    width: fit-content;
-    margin-top: 10px;
-    padding: 10px 20px
-}
-.no-error .copy-val a {
+.no-error a {
     font-family: Poppins, sans-serif;
     font-weight: var(--medium);
     border-radius: 2px;
