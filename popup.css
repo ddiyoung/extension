@@ -2,7 +2,8 @@ body,
 html {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
+    -moz-osx-font-smoothing: grayscale;
+    height: 150px;
 }
 * {
     box-sizing: border-box
@@ -29,11 +30,11 @@ li,
 ol,
 ul {
     text-decoration: none;
-    list-style: none
+    list-style: none;
 }
 button,
 input {
-    border: none
+    border: none;
 }
 body,
 h1,
@@ -46,10 +47,10 @@ html,
 p,
 span {
     user-select: text;
-    cursor: auto
+    cursor: auto;
 }
 img {
-    user-select: none
+    user-select: none;
 }
 article,
 button,
@@ -57,53 +58,53 @@ div,
 form,
 input,
 section {
-    outline: none
+    outline: none;
 }
 a {
     display: block;
-    width: fit-content
+    width: fit-content;
 }
 button,
 fieldset,
 form,
 input {
-    background: none
+    background: none;
 }
 button:hover {
-    cursor: pointer
+    cursor: pointer;
 }
 .r-m {
-    margin: 0
+    margin: 0;
 }
 .r-m-t {
-    margin-top: 0
+    margin-top: 0;
 }
 .r-p-t {
-    padding-top: 0
+    padding-top: 0;
 }
 .r-m-l {
-    margin-left: 0
+    margin-left: 0;
 }
 .r-p-l {
-    padding-left: 0
+    padding-left: 0;
 }
 .r-m-r {
-    margin-right: 0
+    margin-right: 0;
 }
 .r-p-r {
-    padding-right: 0
+    padding-right: 0;
 }
 .r-m-b {
-    margin-bottom: 0
+    margin-bottom: 0;
 }
 .r-p-b {
-    padding-bottom: 0
+    padding-bottom: 0;
 }
 .r-b-r {
-    border-radius: 0
+    border-radius: 0;
 }
 .r-boxshadow {
-    box-shadow: none
+    box-shadow: none;
 }
 :root {
     --patreon: #f96854;
@@ -126,82 +127,82 @@ button:hover {
     --black-15: #323232;
     --black-20: #282828;
     --black-25: #1e1e1e;
-    --black-30: #0a0a0a
+    --black-30: #0a0a0a;
 }
 .base-white-bg {
-    background-color: var(--base-white)
+    background-color: var(--base-white);
 }
 .white-5-bg {
-    background-color: var(--white-5)
+    background-color: var(--white-5);
 }
 .white-10-bg {
-    background-color: var(--white-10)
+    background-color: var(--white-10);
 }
 .white-15-bg {
-    background-color: var(--white-15)
+    background-color: var(--white-15);
 }
 .white-20-bg {
-    background-color: var(--white-20)
+    background-color: var(--white-20);
 }
 .white-25-bg {
-    background-color: var(--white-25)
+    background-color: var(--white-25);
 }
 .white-30-bg {
-    background-color: var(--white-30)
+    background-color: var(--white-30);
 }
 .white-35-bg {
-    background-color: var(--white-35)
+    background-color: var(--white-35);
 }
 .base-black-bg {
-    background-color: var(--base-black)
+    background-color: var(--base-black);
 }
 .black-5-bg {
-    background-color: var(--black-5)
+    background-color: var(--black-5);
 }
 .black-10-bg {
-    background-color: var(--black-10)
+    background-color: var(--black-10);
 }
 .black-15-bg {
-    background-color: var(--black-15)
+    background-color: var(--black-15);
 }
 .black-20-bg {
-    background-color: var(--black-20)
+    background-color: var(--black-20);
 }
 .black-25-bg {
-    background-color: var(--black-25)
+    background-color: var(--black-25);
 }
 .black-30-bg {
-    background-color: var(--black-30)
+    background-color: var(--black-30);
 }
 .black-35-bg {
-    background-color: var(--black-35)
+    background-color: var(--black-35);
 }
 .base-red-bg {
-    background-color: var(--base-red)
+    background-color: var(--base-red);
 }
 .active-red-bg {
-    background-color: var(--active-red)
+    background-color: var(--active-red);
 }
 .base-orange-bg {
-    background-color: var(--base-orange)
+    background-color: var(--base-orange);
 }
 .base-blue-bg {
-    background-color: var(--base-blue)
+    background-color: var(--base-blue);
 }
 .base-green-bg {
-    background-color: var(--base-green)
+    background-color: var(--base-green);
 }
 .patreon-bg {
-    background-color: var(--patreon)
+    background-color: var(--patreon);
 }
 .txt-blue {
-    color: var(--base-blue)
+    color: var(--base-blue);
 }
 .txt-red {
-    color: var(--base-red)
+    color: var(--base-red);
 }
 .txt-white {
-    color: var(--base-white)
+    color: var(--base-white);
 }
 a,
 button,
@@ -216,15 +217,15 @@ li,
 p,
 span,
 ul {
-    word-wrap: break-word
+    word-wrap: break-word;
 }
 .extension-txt {
     color: var(--white-15);
-    font-size: 14px
+    font-size: 14px;
 }
 .extension-txt{
     font-family: Poppins, sans-serif;
-    font-weight: var(--regular)
+    font-weight: var(--regular);
 }
 :root {
     --regular: 400;
@@ -232,22 +233,23 @@ ul {
     --semi-bold: 600;
     --bold: 700;
     --extra-bold: 800;
-    --black: 900
+    --black: 900;
 }
 html {
     margin: 0;
-    padding: 0
+    padding: 0;
 }
 .no-error,
-html {
+html,
+.wrongSite {
     background: var(--base-black);
-    border-radius: 4px
+    border-radius: 4px;
 }
-.no-error {
+.no-error, .wrongSite {
     display: block;
     width: 332px;
     padding: 20px;
-    height: 150px;
+    height: 100%;
 }
 .no-error input[type=text] {
     display: block;
@@ -258,10 +260,10 @@ html {
     width: 100%;
     height: 40px;
     padding: 8px 12px;
-    margin-top: 10px
+    margin-top: 10px;
 }
 .no-error input[type=text]:focus {
-    border: 1px solid var(--white-35)
+    border: 1px solid var(--white-35);
 }
 .no-error label {
     display: flex;
@@ -271,51 +273,28 @@ html {
     font-weight: var(--regular);
     color: var(--base-white);
     font-size: 12px;
-    margin-top: 12px
+    margin-top: 12px;
 }
 .no-error label input {
-    margin-right: 10px
+    margin-right: 10px;
 }
 .no-error h2 {
     font-weight: var(--semi-bold);
-    font-size: 18px
+    font-size: 18px;
 }
-.no-error button,
 .no-error h2 {
     font-family: Poppins, sans-serif;
     color: var(--base-white);
-    letter-spacing: 0.2px
+    letter-spacing: 0.2px;
 }
-.no-error button {
-    font-weight: var(--medium);
-    cursor: pointer;
-    background-color: var(--base-red);
-    transition: 0.3s ease;
-    font-size: 13px;
-    margin-top: 16px;
-    transform: translateY(0)
-}
-.no-error button:hover {
-    transform: translateY(-2px)
-}
-.no-error i {
-    font-family: Poppins, sans-serif;
-    font-weight: var(--bold)
-}
-.no-error a {
-    font-family: Poppins, sans-serif;
-    font-weight: var(--medium);
-    border-radius: 2px;
-    transition: 0.3s ease;
-    font-size: 12px
-}
+.no-error:empty, .wrongSite:empty{display: none;}
 /* The switch - the box around the slider */
 .popup-controlattend-container{
     display: flex;
     flex-flow: row wrap;
     align-items: center;
     justify-content: space-between;
-    margin-top: 15px
+    margin-top: 15px;
 }
 .switch {
   position: relative;

@@ -1,10 +1,11 @@
-{const check = () =>{
-    $("input[type='checkbox']").click(() => {
-        chrome.tabs.executeScript({
-            file: 'contentScript.js'
-        });
-    })
-}
+{
+    const check = () =>{
+        $("input[type='checkbox']").on('click', '#control-lock', () => {
+            chrome.tabs.executeScript({
+                file: 'contentScript.js'
+            });
+        })
+    }
 
     const IsUrlRight = () => {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -22,20 +23,32 @@
             } else {
                 $('.wrongSite').html(`
                     <div class = "popup-error-container">
-                        <p class = "extension-txt">블랙보드 코스 창에서 실행해주세요</p>
+                        <p class = "extension-txt">블랙보드 코스 탭에서 실행해주세요.</p>
+                        <br>
+                        <p class = "extension-txt">Please run in the blackboard course tab.</p>
+                        <br>
+                        <p>
+                            <button id="Black-Course" class="extension-btn" type="button"> 블랙보드 코스 바로가기 </button>
+                        </p>
                     </div>
                 `);
             }
         });
     }
+
+    const goBlackCourse = () => {
+        $("#Black-Course").on('click', () =>{
+            chrome.tabs.create({
+                url: "https://blackboard.sejong.ac.kr/ultra/course"
+            });
+        });
+    }
     
     const main = () => {
-        IsUrlRight() 
+        IsUrlRight();
         check();
+        goBlackCourse();
     }
 
     main();
-
-    
-
 }
