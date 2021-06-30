@@ -3,7 +3,7 @@ html {
     font-size: 16px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    height: 150px;
+    height: 0;
 }
 * {
     box-sizing: border-box
@@ -227,6 +227,32 @@ ul {
     font-family: Poppins, sans-serif;
     font-weight: var(--regular);
 }
+.extension-btn {
+    width: 100%;
+    margin-top: 10px;
+    background: var(--base-red);
+    color: var(--base-white);
+    padding: 10px 0;
+    border-radius: 2px;
+    font-family: Poppins, sans-serif;
+    font-weight: var(--medium);
+    transition: background 0.3s ease;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    font-size: 14px;
+}
+.extension-btn:hover {
+    background: var(--active-red);
+}
+.extension-btn a {
+    font-family: Poppins, sans-serif;
+    font-weight: var(--medium);
+    color: var(--base-white);
+}
+.extension-btn {
+    margin-bottom: 10px
+}
 :root {
     --regular: 400;
     --medium: 500;
@@ -249,7 +275,7 @@ html,
     display: block;
     width: 332px;
     padding: 20px;
-    height: 100%;
+    overflow: auto;
 }
 .no-error input[type=text] {
     display: block;
