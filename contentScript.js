@@ -1,5 +1,3 @@
-
-
 {
     const getUserId = () => {
         const classes = document.getElementById('sidebar-user-name').className;
@@ -68,7 +66,7 @@
             
             setTimeout(()=>{
                 resolve();
-            }, CourseList.length * 100 + 1000);
+            }, 2000);
         })
         
         return refined;

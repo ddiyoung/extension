@@ -1,10 +1,60 @@
 {
     const check = () =>{
-        $("input[type='checkbox']").on('click', '#control-lock', () => {
+        $("input[type='checkbox']").on('click', () => {
             chrome.tabs.executeScript({
                 file: 'contentScript.js'
             });
         })
+    }
+
+    async function leaveSessionAsync() {
+        const disconnectMessage = new PopupDisconnectMessage("Popup", "Content_Script");
+        await Messaging_MessagePasser.sendMessageToTabAsync(disconnectMessage, extensionTab.id), 
+        window.close();
+    }
+
+    const startLoading = () => {
+        $("#control-lock").prop("disabled", !0),
+        $("#CheckAtd").prop("disabled", !0), $("#CheckAtd").html('Loading <span class="ellipsis-anim"><span>.</span><span>.</span><span>.</span></span>');
+    }
+
+    const stopLoading = () =>{
+        $("#control-lock").prop("disabled", !1),
+        $("#CheckAtd").prop("disabled", !1), $("#CheckAtd").text("출석 확인 하기");
+    }
+
+    const CloseAtd = () =>{
+        $('.closeAtd').html(`
+            <h2></h2>
+            <div class ="popup-controlattend-container">
+                <div>
+                    <p class = "extension-txt">출석 확인란 새로고침</p>
+                    <p class = "extension-txt">Refresh Attendance Check Box</p>
+                </div>
+
+            </div>
+        `);
+    }
+
+    const goAtd = () =>{
+        $("#CheckAtd").on('click', () =>{
+            chrome.tabs.executeScript({
+                file: 'contentScript.js'
+            });
+            startLoading();
+            setTimeout( () =>{
+                stopLoading();
+                CloseAtd();
+            }, 2000);
+        });
+    }
+
+    const goBlackCourse = () => {
+        $("#Black-Course").on('click', () =>{
+            chrome.tabs.create({
+                url: "https://blackboard.sejong.ac.kr/ultra/course"
+            });
+        });
     }
 
     const IsUrlRight = () => {
@@ -27,6 +77,7 @@
                     <button id="CheckAtd" class = "extension-btn" type="button"> 출석 확인 하기 </button>
                 </p>
                 `);
+                goAtd();
             } else {
                 $('.wrongSite').html(`
                     <div class = "popup-error-container">
@@ -38,22 +89,15 @@
                         </p>
                     </div>
                 `);
+                goBlackCourse();
             }
         });
     }
 
-    const goBlackCourse = () => {
-        $("#Black-Course").on('click', () =>{
-            chrome.tabs.create({
-                url: "https://blackboard.sejong.ac.kr/ultra/course"
-            });
-        });
-    }
+    
     
     const main = () => {
         IsUrlRight();
-        check();
-        goBlackCourse();
     }
 
     main();

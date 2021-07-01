@@ -267,11 +267,12 @@ html {
 }
 .no-error,
 html,
-.wrongSite {
+.wrongSite,
+.closeAtd {
     background: var(--base-black);
     border-radius: 4px;
 }
-.no-error, .wrongSite {
+.no-error, .wrongSite, .closeAtd {
     display: block;
     width: 332px;
     padding: 20px;
@@ -313,7 +314,7 @@ html,
     color: var(--base-white);
     letter-spacing: 0.2px;
 }
-.no-error:empty, .wrongSite:empty{display: none;}
+.no-error:empty, .wrongSite:empty, .closeAtd:empty{display: none;}
 /* The switch - the box around the slider */
 .popup-controlattend-container{
     display: flex;
