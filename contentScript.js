@@ -114,7 +114,7 @@
     
     const NpData = async (courseIdList) =>{
         const Data = await CompleteData(courseIdList);
-        return Data.filter(elem => elem.pass === 'P');
+        return Data.filter(elem => elem.pass !== 'P');
     }
 
     const getElement = (type) => document.createElement(type);
@@ -127,13 +127,13 @@
         return container;
     }
 
-    const drawDom = async (courseIdList) => {
-        const data = await NpData(courseIdList);
+    const drawDom = async (courseIdList, P) => {
+        const data = P? await CompleteData(courseIdList) : await NpData(courseIdList);
+        console.log(data);
         const header = document.querySelector('.base-courses-header-container');
         const wrapper = document.createElement('div');
         header.style.flexDirection = 'column';
         header.style.height = 'auto';
-        console.log(data);
 
         data.map(elem => {
             const div = getElement('div');
@@ -150,7 +150,10 @@
     const main = async () => {
         const merged = await MergeIdName();
 
-        await drawDom(merged.map(elem => elem.id));
+        var P = window.P;
+        console.log(window.P);
+
+        await drawDom(merged.map(elem => elem.id), P);
     }
 
     main();

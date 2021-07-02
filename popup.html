@@ -9,8 +9,40 @@
     <script defer src="popup.js"></script>
 </head>
 <body>
-    <div class ="no-error"></div>
-    <div class ="closeAtd"></div>
-    <div class ="wrongSite"></div>
+    <div class ="no-error">
+        <h2>출석 확인하기</h2>
+                <div class ="popup-controlattend-container">
+                    <div>
+                        <p class = "extension-txt">모든 강의 출석 확인하기</p>
+                        <p class = "extension-txt">Check Attendance For All Courses</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="control-lock">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+                <p>
+                    <button id="CheckAtd" class = "extension-btn" type="button"> 출석 확인 하기 </button>
+                </p>
+    </div>
+    <div class ="closeAtd">
+        <h2></h2>
+        <div class ="popup-controlattend-container">
+            <div>
+                <p class = "extension-txt">출석 확인란 새로고침</p>
+                <p class = "extension-txt">Refresh Attendance Check Box</p>
+            </div>
+        </div>
+    </div>
+    <div class ="wrongSite" type="hidden">
+        <div class = "popup-error-container">
+            <p class = "extension-txt">블랙보드 코스 탭에서 실행해주세요.</p>
+            <br>
+            <p class = "extension-txt">Please run in the blackboard course tab.</p>
+            <p>
+                <button id="Black-Course" class="extension-btn" type="button"> 블랙보드 코스 바로가기 </button>
+            </p>
+        </div>
+    </div>
 </body>
 </html>
