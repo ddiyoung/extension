@@ -24,9 +24,7 @@
     }
 
     const CloseAtd = () =>{
-        $('.closeAtd').html(`
-            
-        `);
+        $('.closeAtd').removeClass('hidden'), $('.no-error').addClass('hidden');
     }
 
     const goAtd = () =>{
@@ -53,16 +51,10 @@
     const IsUrlRight = () => {
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             currentTab = tabs[0].url.replace(/(^\w+:|^)\/\//, '');
-            if (currentTab === 'blackboard.sejong.ac.kr/ultra/course') {
-                $('.no-error').html(`
-                
-                `);
-                
+            if (currentTab === 'blackboard.sejong.ac.kr/ultra/course'){
+                $('.no-error').removeClass('hidden');            
             } else {
-                $('.wrongSite').html(`
-                    
-                `);
-                
+                $('.wrongSite').removeClass('hidden');
             }
         });
     }
