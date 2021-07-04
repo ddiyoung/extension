@@ -157,7 +157,10 @@
     }
 
     main();
-    chrome.runtime.sendMessage({action: "FINISH"}, function(response) {
-        alert(response);
-    });
+
+    const test = () =>{
+        chrome.runtime.sendMessage({action: "FINISH"}, function(response) {
+            alert(response);
+        });
+    }
 }

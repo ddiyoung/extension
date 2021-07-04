@@ -1,16 +1,21 @@
 {
     const Pcheck = () =>{
         $("input[type='checkbox']").on('click', () => {
-            chrome.tabs.executeScript({
-                code: 'window.P = 1;'
-            });
-        })
+            var checkbox = $('input[type="checkbox"]');
+            if ($(checkbox).prop('checked')) {
+                chrome.tabs.executeScript({
+                    code: 'window.P = 1;'
+                });
+            } else{
+                PUnCheck();
+            }
+        });
     }
 
-    async function leaveSessionAsync() {
-        const disconnectMessage = new PopupDisconnectMessage("Popup", "Content_Script");
-        await Messaging_MessagePasser.sendMessageToTabAsync(disconnectMessage, extensionTab.id), 
-        window.close();
+    const PUnCheck = () =>{
+        chrome.tabs.executeScript({
+            code: 'window.P = 0;'
+        });
     }
 
     const startLoading = () => {
@@ -28,7 +33,7 @@
     }
 
     const CloseAtdWindow = () =>{
-
+        PUnCheck();
         window.close();
     }
 
