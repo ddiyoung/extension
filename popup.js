@@ -14,17 +14,28 @@
     }
 
     const startLoading = () => {
-        $("#control-lock").prop("disabled", !0),
+        $("#control-lock").prop("disabled", !0), $("#CloseBtn").prop("disabled", !0),
         $("#CheckAtd").prop("disabled", !0), $("#CheckAtd").html('Loading <span class="ellipsis-anim"><span>.</span><span>.</span><span>.</span></span>');
     }
 
     const stopLoading = () =>{
-        $("#control-lock").prop("disabled", !1),
+        $("#control-lock").prop("disabled", !1), $("#CloseBtn").prop("disabled", !1),
         $("#CheckAtd").prop("disabled", !1), $("#CheckAtd").text("출석 확인 하기");
     }
 
     const CloseAtd = () =>{
         $('.closeAtd').removeClass('hidden'), $('.no-error').addClass('hidden');
+    }
+
+    const CloseAtdWindow = () =>{
+
+        window.close();
+    }
+
+    const ClickCloseBtn = () =>{
+        $('#CloseBtn').on('click', () =>{
+            CloseAtdWindow();
+        })
     }
 
     const goAtd = () =>{
@@ -66,6 +77,7 @@
         Pcheck();
         goAtd();
         goBlackCourse();
+        ClickCloseBtn();
     }
 
     main();
