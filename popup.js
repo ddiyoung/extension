@@ -84,9 +84,9 @@
     const ClickRefresh_btn = () => {
         $('#Refresh-btn').click( () =>{
             ExecuteContent();
-            $('#Refresh-btn').addClass('icon-refresh rotating');
+            $('.Refresh-btn-logo').addClass('logo-rotate');
             setTimeout( ()=>{
-                $('#Refresh-btn').removeClass('icon-refresh rotating');
+                $('.Refresh-btn-logo').removeClass('logo-rotate');
             }, 2000);
         })
     }

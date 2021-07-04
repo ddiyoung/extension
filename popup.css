@@ -314,7 +314,6 @@ html,
     color: var(--base-white);
     letter-spacing: 0.2px;
 }
-.no-error:empty, .wrongSite:empty, .closeAtd:empty{display: none;}
 /* The switch - the box around the slider */
 .popup-controlattend-container{
     display: flex;
@@ -387,9 +386,24 @@ input:checked + .slider:before {
     display: none !important
 }
 
+.nothidden{
+    display: block;
+}
+
 /* Refresh-btn-logo size */
 
 .Refresh-btn-logo {
     width: 50px;
     height: 50px;
+}
+
+@keyframes rotate_image{
+	100% {
+    	transform: rotate(360deg);
+    }
+}
+
+.logo-rotate {
+    animation: rotate_image 1.5s linear infinite;
+    transform-origin: 50% 50%;
 }
