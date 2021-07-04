@@ -1,4 +1,10 @@
 {
+    const ExecuteContent = () =>{
+        chrome.tabs.executeScript({
+            file: 'contentScript.js'
+        });
+    }
+
     const Pcheck = () =>{
         $("input[type='checkbox']").on('click', () => {
             var checkbox = $('input[type="checkbox"]');
@@ -20,11 +26,13 @@
 
     const startLoading = () => {
         $("#control-lock").prop("disabled", !0), $("#CloseBtn").prop("disabled", !0),
+        $('#Refresh-btn').prop("disabled", !0),
         $("#CheckAtd").prop("disabled", !0), $("#CheckAtd").html('Loading <span class="ellipsis-anim"><span>.</span><span>.</span><span>.</span></span>');
     }
 
     const stopLoading = () =>{
         $("#control-lock").prop("disabled", !1), $("#CloseBtn").prop("disabled", !1),
+        $('#Refresh-btn').prop("disabled", !1),
         $("#CheckAtd").prop("disabled", !1), $("#CheckAtd").text("출석 확인 하기");
     }
 
@@ -45,9 +53,7 @@
 
     const goAtd = () =>{
         $("#CheckAtd").on('click', () =>{
-            chrome.tabs.executeScript({
-                file: 'contentScript.js'
-            });
+            ExecuteContent();
             startLoading();
             setTimeout( () =>{
                 stopLoading();
@@ -75,14 +81,27 @@
         });
     }
 
-    
-    
-    const main = () => {
-        IsUrlRight();
+    const ClickRefresh_btn = () => {
+        $('#Refresh-btn').click( () =>{
+            ExecuteContent();
+            $('#Refresh-btn').addClass('icon-refresh rotating');
+            setTimeout( ()=>{
+                $('#Refresh-btn').removeClass('icon-refresh rotating');
+            }, 2000);
+        })
+    }
+
+    const BtnFunction = () =>{
         Pcheck();
         goAtd();
         goBlackCourse();
         ClickCloseBtn();
+        ClickRefresh_btn();
+    }
+    
+    const main = () => {
+        IsUrlRight();
+        BtnFunction();
     }
 
     main();
