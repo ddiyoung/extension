@@ -26,13 +26,13 @@
 
     const startLoading = () => {
         $("#control-lock").prop("disabled", !0), $("#CloseBtn").prop("disabled", !0),
-        $('#Refresh-btn').prop("disabled", !0),
+        $('#Refresh-btn').prop("disabled", !0),  $("#control-lock2").prop("disabled", !0),
         $("#CheckAtd").prop("disabled", !0), $("#CheckAtd").html('Loading <span class="ellipsis-anim"><span>.</span><span>.</span><span>.</span></span>');
     }
 
     const stopLoading = () =>{
         $("#control-lock").prop("disabled", !1), $("#CloseBtn").prop("disabled", !1),
-        $('#Refresh-btn').prop("disabled", !1),
+        $('#Refresh-btn').prop("disabled", !1),  $("#control-lock2").prop("disabled", !1),
         $("#CheckAtd").prop("disabled", !1), $("#CheckAtd").text("출석 확인 하기");
     }
 
