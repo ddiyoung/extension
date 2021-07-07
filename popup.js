@@ -40,8 +40,13 @@
         $('.closeAtd').removeClass('hidden'), $('.no-error').addClass('hidden');
     }
 
+    const sendMessageToBack = () =>{
+        chrome.runtime.sendMessage({action: "OFF"});
+    }
+
     const CloseAtdWindow = () =>{
         PUnCheck();
+        sendMessageToBack();
         window.close();
     }
 
@@ -102,6 +107,8 @@
     const main = () => {
         IsUrlRight();
         BtnFunction();
+
+        console.log(chrome.storage.local.get(['ON']));
     }
 
     main();

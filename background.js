@@ -1,13 +1,21 @@
 {   
-    const test = () =>{
-        chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-            console.log(sender.tab ?
-                "from a content script:" + sender.tab.url :
-                "from the extension");
-    
-            if (request.action === "FINISH")
-                sendResponse({farewell: "goodbye"});
-        });
+    const ListenMessage = () => {
+        chrome.runtime.onMessage.addListener( (request, sender, sendResponse) =>{
+            console.log("ON");
+            if(request.action === "ON"){
+                chrome.storage.local.set({'ON' : 1});
+                
+            }
+            else{
+                chrome.storage.local.set({'ON' : 0});
+                console.log("OFF");
+            }
+        } )
     }
 
+    const main = () => {
+        ListenMessage();
+    }
+
+    main();
 }

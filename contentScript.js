@@ -147,6 +147,13 @@
         header.append(wrapper);
     }
 
+    const sendMessageToBack = () =>{
+        chrome.runtime.sendMessage({action: "ON"}, (response) =>{
+            console.log(response);
+        });
+        
+    }
+
     const main = async () => {
         const merged = await MergeIdName();
 
@@ -154,13 +161,9 @@
         console.log(window.P);
 
         await drawDom(merged.map(elem => elem.id), P);
+
     }
 
     main();
-
-    const test = () =>{
-        chrome.runtime.sendMessage({action: "FINISH"}, function(response) {
-            alert(response);
-        });
-    }
+    sendMessageToBack();
 }
