@@ -4,11 +4,17 @@
         return classes.split(' ')[2].split('course_user')[1];
     }
 
+    const NowDate = () => {
+        return new Date().toISOString();
+    }
+
     const getCourseIdList = () => {
         const url = `https://blackboard.sejong.ac.kr/learn/api/v1/users/${getUserId()}/memberships?expand=course.effectiveAvailability,course.permissions,courseRole&includeCount=true&limit=10000`;
         return new Promise((resolve, reject) => {
             $.get(url, ({ results }) => {
-                const refined = results.filter(elem => elem.course.description).filter(elem => elem.course.term.name === '2021학년도 1학기');
+                const Now = NowDate();
+                const tmpNow = '2021-03-07T12:00:00.844Z';
+                const refined = results.filter(elem => elem.course.description).filter(elem => elem.course.startDate < tmpNow).filter(elem => elem.course.endDate > tmpNow);
                 resolve(refined.map(elem => ({
                     courseId: elem.course.courseId,
                     name: elem.course.name,
