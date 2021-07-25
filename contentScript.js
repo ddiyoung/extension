@@ -130,9 +130,9 @@
     const drawDom = async (courseIdList, P) => {
         const data = P? await CompleteData(courseIdList) : await NpData(courseIdList);
         console.log(data);
-        const header = document.querySelector('.base-courses-header-container');
+        const header = document.querySelector('.base');
         const wrapper = document.createElement('div');
-        header.style.flexDirection = 'column';
+        header.style.flexDirection = 'row';
         header.style.height = 'auto';
 
         data.map(elem => {

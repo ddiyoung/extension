@@ -414,7 +414,7 @@ input:checked + .slider:before {
     width: 50px;
     height: 50px;
 }
-.Refresh-btn{
+#Refresh-btn{
     overflow: hidden;
 }
 
@@ -427,5 +427,4 @@ input:checked + .slider:before {
 .logo-rotate {
     animation: rotate_image 1.5s linear infinite;
     transform-origin: 50% 50%;
-    overflow-y: hidden;
 }
