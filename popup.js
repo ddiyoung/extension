@@ -36,8 +36,14 @@
         $("#CheckAtd").prop("disabled", !1), $("#CheckAtd").text("출석 확인 하기");
     }
 
+    const InitView = () =>{
+        $('.title-container').removeClass('hidden'), $('.check-container').removeClass('hidden'),
+        $('.check-btn-container').removeClass('hidden');
+    }
+
     const CloseAtd = () =>{
-        $('.closeAtd').removeClass('hidden'), $('.no-error').addClass('hidden');
+        $('.refresh-div').removeClass('hidden'), $('.closeAtd-btn').removeClass('hidden'),
+        $('.title-container').addClass('hidden'), $('.check-btn-container').addClass('hidden');;
     }
 
     const sendMessageToBack = () =>{
@@ -79,7 +85,8 @@
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             currentTab = tabs[0].url.replace(/(^\w+:|^)\/\//, '');
             if (currentTab === 'blackboard.sejong.ac.kr/ultra/course'){
-                $('.no-error').removeClass('hidden');            
+                //$('.no-error').removeClass('hidden');
+                InitView();          
             } else {
                 $('.wrongSite').removeClass('hidden');
             }

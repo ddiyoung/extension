@@ -265,20 +265,37 @@ html {
     margin: 0;
     padding: 0;
 }
-.no-error,
 html,
-.wrongSite,
-.closeAtd {
+.wrongSite{
     background: var(--base-black);
     border-radius: 4px;
 }
-.no-error, .wrongSite, .closeAtd {
+.wrongSite{
     display: block;
     width: 332px;
     padding: 20px;
     overflow: auto;
 }
-.no-error input[type=text] {
+.title-container,
+.check-container,
+.check-btn-container,
+.refresh-div,
+.closeAtd-btn{
+    display: block;
+    width: 332px;
+    padding-left: 20px;
+    padding-right: 20px;
+    overflow: auto;
+}
+.title-container{
+    padding-top: 20px;
+    overflow: auto;
+}
+.check-btn-container,
+.closeAtd-btn{
+    padding-bottom: 20px;
+}
+.check-container input[type=text] {
     display: block;
     outline-style: none;
     color: var(--base-white);
@@ -289,10 +306,10 @@ html,
     padding: 8px 12px;
     margin-top: 10px;
 }
-.no-error input[type=text]:focus {
+.check-container input[type=text]:focus {
     border: 1px solid var(--white-35);
 }
-.no-error label {
+.check-container label {
     display: flex;
     flex-flow: row wrap;
     align-items: center;
@@ -302,14 +319,15 @@ html,
     font-size: 12px;
     margin-top: 12px;
 }
-.no-error label input {
+.check-container label input {
     margin-right: 10px;
 }
-.no-error h2 {
+.title-container h2 {
+    height: 21px;
     font-weight: var(--semi-bold);
     font-size: 18px;
 }
-.no-error h2 {
+.title-container h2 {
     font-family: Poppins, sans-serif;
     color: var(--base-white);
     letter-spacing: 0.2px;
@@ -322,13 +340,17 @@ html,
     justify-content: space-between;
     margin-top: 15px;
 }
-.switch,
-.refresh {
+.switch{
   position: relative;
   display: inline-block;
   width: 52px;
   height: 26px;
   vertical-align:middle;
+}
+
+.refresh{
+    width: 52px;
+    height: 26px;
 }
 
 /* Hide default HTML checkbox */
@@ -383,11 +405,7 @@ input:checked + .slider:before {
 }
 
 .hidden {
-    display: none !important
-}
-
-.nothidden{
-    display: block;
+    overflow: hidden;
 }
 
 /* Refresh-btn-logo size */
@@ -395,6 +413,9 @@ input:checked + .slider:before {
 .Refresh-btn-logo {
     width: 50px;
     height: 50px;
+}
+.Refresh-btn{
+    overflow: hidden;
 }
 
 @keyframes rotate_image{
@@ -406,4 +427,5 @@ input:checked + .slider:before {
 .logo-rotate {
     animation: rotate_image 1.5s linear infinite;
     transform-origin: 50% 50%;
+    overflow-y: hidden;
 }

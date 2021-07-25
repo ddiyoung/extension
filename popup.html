@@ -9,8 +9,10 @@
     <script defer src="popup.js"></script>
 </head>
 <body>
-    <div class ="no-error hidden">
+    <div class = "title-container hidden">
         <h2>출석 확인하기</h2>
+    </div>
+    <div class = "check-container hidden">
         <div class ="popup-controlattend-container">
             <div>
                 <p class = "extension-txt">모든 강의 출석 확인하기</p>
@@ -21,30 +23,24 @@
                 <span class="slider round"></span>
             </label>
         </div>
+    </div>
+    <div class = "check-btn-container hidden">
         <p>
             <button id="CheckAtd" class = "extension-btn" type="button"> 출석 확인 하기 </button>
         </p>
     </div>
-    <div class ="closeAtd hidden">
-        <div class ="popup-controlattend-container">
-            <div>
-                <p class = "extension-txt">모든 강의 출석 확인하기</p>
-                <p class = "extension-txt">Check Attendance For All Courses</p>
-            </div>
-            <label class="switch">
-                <input type="checkbox" id="control-lock2">
-                <span class="slider round"></span>
-            </label>
-        </div>
+    <div class ="refresh-div hidden">
         <div class ="popup-controlattend-container">
             <div>
                 <p class = "extension-txt">출석 확인란 새로고침</p>
                 <p class = "extension-txt">Refresh Attendance Check Box</p>
             </div>
-            <label calss = "refresh">
+            <div calss = "refresh">
                 <button id ="Refresh-btn"><img class = "Refresh-btn-logo" src = "refresh-button.png"></button>
-            </label>
+            </div>
         </div>
+    </div>
+    <div class = "closeAtd-btn hidden">
         <p>
             <button id="CloseBtn" class = "extension-btn" type="button"> 출석 확인란 닫기 </button>
         </p>
