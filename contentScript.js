@@ -11,7 +11,8 @@
                 const refined = results.filter(elem => elem.course.description).filter(elem => elem.course.term.name === '2021학년도 1학기');
                 resolve(refined.map(elem => ({
                     courseId: elem.course.courseId,
-                    name: elem.course.name
+                    name: elem.course.name,
+                    course_Number: elem.courseId
                 })));
             });
         });
@@ -95,7 +96,8 @@
     const MergeIdName = async () =>{
         return (await getCourseIdList()).map(elem => ({
             id: elem.courseId,
-            Name: elem.name
+            Name: elem.name,
+            Course_Id: elem.course_Number
         }));
     };
     
@@ -103,10 +105,11 @@
     const CompleteData = async (courseIdList) => {
         const Manufactured = await ManufactureData(courseIdList);
         const MergeList = await MergeIdName();
-    
+
         Manufactured.map(elem =>{
             const index = MergeList.findIndex(m => m.id == elem.id);
             elem.Name = MergeList[index].Name;
+            elem.Course_Id = MergeList[index].Course_Id;
         })
     
         return Manufactured;
@@ -118,6 +121,7 @@
     }
 
     const getElement = (type) => document.createElement(type);
+
     const setInnerText = (container, inner) => {
         if (Array.isArray(inner)) {
             container.innerText = inner.join(' ');
@@ -127,12 +131,26 @@
         return container;
     }
 
+    const addStyle = () => {
+        const style = document.createElement('style');
+
+        style.innerText = `
+            .atd-wrapper{
+                float: right;
+            }
+        `;
+
+        document.head.appendChild(style);
+    }
+
     const drawDom = async (courseIdList, P) => {
         const data = P? await CompleteData(courseIdList) : await NpData(courseIdList);
+
         console.log(data);
-        const header = document.querySelector('.base');
+
+        const header = document.querySelector('#main-content-inner');
         const wrapper = document.createElement('div');
-        header.style.flexDirection = 'row';
+        header.style.display = 'block';
         header.style.height = 'auto';
 
         data.map(elem => {
@@ -141,9 +159,13 @@
             div.append(setInnerText(getElement('div'), [elem.Name, elem.LectureName]));
             div.append(setInnerText(getElement('div'), [elem.Attendance, elem.DeadLine]));
             div.append(setInnerText(getElement('div'), [elem.week, elem.pass]));
+            div.style.display = "flex";
             wrapper.append(div);
         });
 
+        wrapper.className = 'atd-wrapper hide-in-background themed-background-primary-fill-only';
+
+        addStyle();
         header.append(wrapper);
     }
 
@@ -158,10 +180,8 @@
         const merged = await MergeIdName();
 
         var P = window.P;
-        console.log(window.P);
 
         await drawDom(merged.map(elem => elem.id), P);
-
     }
 
     main();
