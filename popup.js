@@ -1,4 +1,14 @@
-{
+{   
+    const CommunicateBack = () =>{
+        const port = chrome.extension.connect({
+            name: "Sample Communication"
+       });
+       port.onMessage.addListener(function(msg) {
+            console.log(msg);
+            return msg;
+        });
+    }
+
     const ExecuteContent = () =>{
         chrome.tabs.executeScript({
             file: 'contentScript.js'
@@ -48,6 +58,7 @@
 
     const sendMessageToBack = () =>{
         chrome.runtime.sendMessage({action: "OFF"});
+        chrome.storage.local.set({ON: 0});
     }
 
     const CloseAtdWindow = () =>{
@@ -113,9 +124,8 @@
     
     const main = () => {
         IsUrlRight();
+        CommunicateBack();
         BtnFunction();
-
-        console.log(chrome.storage.local.get(['ON']));
     }
 
     main();

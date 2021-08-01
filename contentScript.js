@@ -15,6 +15,7 @@
                 const Now = NowDate();
                 const tmpNow = '2021-03-07T12:00:00.844Z';
                 const refined = results.filter(elem => elem.course.description).filter(elem => elem.course.startDate < tmpNow).filter(elem => elem.course.endDate > tmpNow);
+                console.log(refined);
                 resolve(refined.map(elem => ({
                     courseId: elem.course.courseId,
                     name: elem.course.name,
@@ -154,7 +155,7 @@
 
         console.log(data);
 
-        const header = document.querySelector('#main-content-inner');
+        const header = document.querySelector('#base_tools');
         const wrapper = document.createElement('div');
         header.style.display = 'block';
         header.style.height = 'auto';
@@ -169,17 +170,33 @@
             wrapper.append(div);
         });
 
-        wrapper.className = 'atd-wrapper hide-in-background themed-background-primary-fill-only';
+        
 
         addStyle();
         header.append(wrapper);
     }
 
+    const testDraw = () =>{
+        let base = `      <li class="base-navigation-button">
+        <details class="base-navigation-button-content">
+          <summary>
+          <bb-svg-icon icon="tools" size="medium" aria-hidden="true">
+              <svg class="svg-icon svg-icon-directive medium-icon default directional-icon" focusable="false" aria-hidden="true" bb-cache-compilation="svg-icon">
+              <use xlink:href="https://blackboard.sejong.ac.kr/ultra/course#icon-medium-tools"></use>
+              </svg>
+              </bb-svg-icon>
+              <span class="link-text" bb-translate="">출석체크</span>
+            </summary>`
+
+        base += 
+
+        base += `</details></li>`
+    }
+
     const sendMessageToBack = () =>{
         chrome.runtime.sendMessage({action: "ON"}, (response) =>{
-            console.log(response);
+            console.log('On AtdWindow');
         });
-        
     }
 
     const main = async () => {
@@ -188,8 +205,9 @@
         var P = window.P;
 
         await drawDom(merged.map(elem => elem.id), P);
+        sendMessageToBack();
     }
 
     main();
-    sendMessageToBack();
+    
 }

@@ -1,14 +1,19 @@
 {   
     const ListenMessage = () => {
         chrome.runtime.onMessage.addListener( (request, sender, sendResponse) =>{
-            console.log("ON");
             if(request.action === "ON"){
-                chrome.storage.local.set({'ON' : 1});
-                
+                chrome.storage.local.set({
+                    Connect: 1
+                }, (function() {
+                    console.log("Connect.....");
+                }));
             }
-            else{
-                chrome.storage.local.set({'ON' : 0});
-                console.log("OFF");
+            else if (request.action === "OFF"){
+                chrome.storage.local.set({
+                    Connect: 0
+                }, (function() {
+                    console.log("Disconnect.....");
+                }));
             }
         } )
     }

@@ -4,8 +4,7 @@
 	"description": "Print Hello, World! message",
 	"version": "1.0.0",
 	"background": {
-		"scripts": ["background.js"],
-		"persistent": false
+		"scripts": ["background.js"]
 	},
 	
 	"icons": {
