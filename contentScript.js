@@ -8,14 +8,32 @@
         return new Date().toISOString();
     }
 
+    const getStartDate = () => {
+        const url = `https://blackboard.sejong.ac.kr/learn/api/v1/terms`
+        return new Promise((resolve, reject) =>{
+            $.get(url, ({results}) =>{
+                //const Date = results.pop().startDate;
+                const Date = results[28].startDate;
+                resolve(Date);
+            })
+        })
+    }
+
+    const HowWeek = async () => {
+        //const Now = new Date(NowDate());
+        const Now = new Date('2021-03-15T12:00:00.844Z');
+        const Start = new Date(await getStartDate());
+        const week = parseInt((Now -Start) / 1000 / 60 / 60 / 24 / 7);
+        return week;
+    }
+
     const getCourseIdList = () => {
         const url = `https://blackboard.sejong.ac.kr/learn/api/v1/users/${getUserId()}/memberships?expand=course.effectiveAvailability,course.permissions,courseRole&includeCount=true&limit=10000`;
         return new Promise((resolve, reject) => {
             $.get(url, ({ results }) => {
                 const Now = NowDate();
-                const tmpNow = '2021-03-07T12:00:00.844Z';
+                const tmpNow = '2021-03-15T12:00:00.844Z';
                 const refined = results.filter(elem => elem.course.description).filter(elem => elem.course.startDate < tmpNow).filter(elem => elem.course.endDate > tmpNow);
-                console.log(refined);
                 resolve(refined.map(elem => ({
                     courseId: elem.course.courseId,
                     name: elem.course.name,
@@ -23,6 +41,33 @@
                 })));
             });
         });
+    }
+
+    const getContentId = async (courseId, week) => {
+        const url = `https://blackboard.sejong.ac.kr/webapps/blackboard/execute/course/menuFolderViewGenerator`;
+        const parm = {
+            initTree : 'true',
+            storeScope : 'Session',
+            course_id : courseId,
+            displayMode : 'courseLinkPicker',
+            content_id : ''
+        };
+        
+        const Course_Id = courseId;
+        return new Promise((resolve, reject) =>{
+            $.post(url, parm, ({children}) =>{
+                for(let i = 0 ; i < children[0].children.length; i++){
+                    if(children[0].children[i].children.length !== 0){
+                        if(children[0].children[i].children[0].contents.indexOf('title=\"공지\"') !== -1){
+                            const idStr = children[0].children[i].children[week].id;
+                            const Content_Id = idStr.slice(idStr.lastIndexOf(':')+1, idStr.length);
+                            const refined = {Content_Id, Course_Id};
+                            resolve(refined);
+                        }
+                    }
+                }
+            })
+        })
     }
     
     const getDataFromCourse = (course_id) => {
@@ -60,6 +105,25 @@
     
         return ({LectureName, Attendance, DeadLine});
     };
+
+    const getContentData = async (courseIdList) => {
+        const Course_Id = courseIdList[0];
+        const refined = [];
+
+        await new Promise((resolve, reject) =>{
+            for(let i = 0; i < Course_Id.length; i++){
+                setTimeout(async () =>{
+                    refined.push(await getContentId(Course_Id[i], 0));
+                }, i * 100);
+            }
+
+            setTimeout(() =>{
+                resolve();
+            }, 1000);
+        })
+
+        return refined;
+    };
     
     const getCourseData = async (courseIdList) =>{
         const CourseList = courseIdList;
@@ -69,7 +133,7 @@
             for (let i = 0 ; i < CourseList.length; i++){
                 setTimeout(async () => {
                     refined.push(await getDataFromCourse(CourseList[i]));
-                }, i * 100);
+                }, i * 150);
             }
             
             setTimeout(()=>{
@@ -86,7 +150,7 @@
         const Nowtest = Nowsecond.slice(0, Nowsecond.length -3);
         const refined = [];
     
-        const Now = "2021-03-07 12:00";
+        const Now = "2021-03-15 12:00";
     
         totalCourseData.map(elem =>{
             elem.map(e =>{
@@ -127,56 +191,59 @@
         return Data.filter(elem => elem.pass !== 'P');
     }
 
-    const getElement = (type) => document.createElement(type);
+    const AddContentId = async () => {
+        const merged = await MergeIdName();
+        const data = window.P? await CompleteData(merged.map(elem => elem.id)) : await NpData(merged.map(elem => elem.id));
 
-    const setInnerText = (container, inner) => {
-        if (Array.isArray(inner)) {
-            container.innerText = inner.join(' ');
-            return container;
-        }
-        container.innerText = inner;
-        return container;
-    }
-
-    const addStyle = () => {
-        const style = document.createElement('style');
-
-        style.innerText = `
-            .atd-wrapper{
-                float: right;
-            }
-        `;
-
-        document.head.appendChild(style);
-    }
-
-    const drawDom = async (courseIdList, P) => {
-        const data = P? await CompleteData(courseIdList) : await NpData(courseIdList);
-
+        const Course_Id_List = [];
+        Course_Id_List.push(merged.map(elem => elem.Course_Id));
+        const Content_data = await getContentData(Course_Id_List);
+        let week;
+        data.map(elem =>{
+            Content_data.map(e =>{
+                if(elem.Course_Id === e.Course_Id){
+                    week = elem.week[0];
+                    const Split = e.Content_Id.split('_');
+                    const Content = parseInt(Split[1]) + parseInt(week);
+                    const id = {
+                        Content_Id : '_'+Content +'_1'
+                    }
+                    Object.assign(elem, id);
+                }
+            })
+        })
         console.log(data);
 
-        const header = document.querySelector('#base_tools');
-        const wrapper = document.createElement('div');
-        header.style.display = 'block';
-        header.style.height = 'auto';
-
-        data.map(elem => {
-            const div = getElement('div');
-            
-            div.append(setInnerText(getElement('div'), [elem.Name, elem.LectureName]));
-            div.append(setInnerText(getElement('div'), [elem.Attendance, elem.DeadLine]));
-            div.append(setInnerText(getElement('div'), [elem.week, elem.pass]));
-            div.style.display = "flex";
-            wrapper.append(div);
-        });
-
-        
-
-        addStyle();
-        header.append(wrapper);
+        return data;
     }
 
-    const testDraw = () =>{
+    const AddBaseDom = async () =>{
+        const data = await AddContentId();
+
+        const NameList = [...new Set (data.map(elem => elem.Name))];
+
+        const refined = [ (data.filter)];
+        
+        let Add = '';
+        data.map(elem =>{
+            Add += `
+            <details>
+            <summary>${elem.Name}</summary>
+            <div>
+              <a target="_blank" href="https://blackboard.sejong.ac.kr/webapps/blackboard/content/listContent.jsp?course_id=${elem.Course_Id}&content_id=${elem.Content_Id}">
+              <div>${elem.LectureName}</div>
+              <div>${elem.Attendance} ${elem.DeadLine}</div>
+              <div>${elem.week, elem.pass}</div>
+            </a>
+            </div>
+          </details>
+            `
+        })
+        return Add;
+    }
+
+    const testDraw = async () =>{      
+
         let base = `      <li class="base-navigation-button">
         <details class="base-navigation-button-content">
           <summary>
@@ -186,11 +253,14 @@
               </svg>
               </bb-svg-icon>
               <span class="link-text" bb-translate="">출석체크</span>
-            </summary>`
+            </summary>`;
 
-        base += 
+        base += await AddBaseDom();
 
-        base += `</details></li>`
+        base += `</details></li>`;
+
+        $("#base_tools").append(base);
+        $("#side-menu").width('500px');
     }
 
     const sendMessageToBack = () =>{
@@ -199,12 +269,9 @@
         });
     }
 
+
     const main = async () => {
-        const merged = await MergeIdName();
-
-        var P = window.P;
-
-        await drawDom(merged.map(elem => elem.id), P);
+        await testDraw();
         sendMessageToBack();
     }
 
