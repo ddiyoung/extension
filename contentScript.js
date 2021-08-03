@@ -220,24 +220,34 @@
     const AddBaseDom = async () =>{
         const data = await AddContentId();
 
-        const NameList = [...new Set (data.map(elem => elem.Name))];
+        const NameList = [...new Set(data.map(elem => elem.Name))];
 
         const refined = [ (data.filter)];
         
         let Add = '';
-        data.map(elem =>{
+        
+
+        const ref = NameList.map(elem => ({
+            name: elem,
+            arr: [...data.filter(elem2 => elem2.Name === elem)]
+        }));
+
+        ref.map(elem =>{
             Add += `
             <details>
-            <summary>${elem.Name}</summary>
+            <summary>${elem.name} (${elem.arr.length}개)</summary>
+            `;
+
+            Add += elem.arr.map(elem2 => `
             <div>
-              <a target="_blank" href="https://blackboard.sejong.ac.kr/webapps/blackboard/content/listContent.jsp?course_id=${elem.Course_Id}&content_id=${elem.Content_Id}">
-              <div>${elem.LectureName}</div>
-              <div>${elem.Attendance} ${elem.DeadLine}</div>
-              <div>${elem.week, elem.pass}</div>
-            </a>
-            </div>
-          </details>
-            `
+                <a target="_blank" href="https://blackboard.sejong.ac.kr/webapps/blackboard/content/listContent.jsp?course_id=${elem2.Course_Id}&content_id=${elem2.Content_Id}">
+                    <div>${elem2.LectureName}</div>
+                    <div>${elem2.Attendance} ${elem2.DeadLine}</div>
+                    <div>${elem2.week, elem2.pass}</div>
+                </a>
+            </div>`).join('');
+            
+            Add += '</details>';
         })
         return Add;
     }
