@@ -1,17 +1,13 @@
 {   
-    const CommunicateBack = () =>{
-        const port = chrome.extension.connect({
-            name: "Sample Communication"
-       });
-       port.onMessage.addListener(function(msg) {
-            console.log(msg);
-            return msg;
-        });
-    }
-
     const ExecuteContent = () =>{
         chrome.tabs.executeScript({
             file: 'contentScript.js'
+        });
+    }
+
+    const ExecuteDelete = () =>{
+        chrome.tabs.executeScript({
+            file: 'DeleteDomScript.js'
         });
     }
 
@@ -53,17 +49,17 @@
 
     const CloseAtd = () =>{
         $('.refresh-div').removeClass('hidden'), $('.closeAtd-btn').removeClass('hidden'),
-        $('.title-container').addClass('hidden'), $('.check-btn-container').addClass('hidden');;
+        $('.title-container').addClass('hidden'), $('.check-btn-container').addClass('hidden'),
+        $('.check-container').removeClass('hidden');
     }
 
-    const sendMessageToBack = () =>{
-        chrome.runtime.sendMessage({action: "OFF"});
-        chrome.storage.local.set({ON: 0});
+    const sendMessageToBack = (msg) =>{
+        chrome.runtime.sendMessage({action: msg});
     }
 
     const CloseAtdWindow = () =>{
         PUnCheck();
-        sendMessageToBack();
+        sendMessageToBack("OFF");
         window.close();
     }
 
@@ -80,7 +76,7 @@
             setTimeout( () =>{
                 stopLoading();
                 CloseAtd();
-            }, 2000);
+            }, 3000);
         });
     }
 
@@ -96,8 +92,17 @@
         chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
             currentTab = tabs[0].url.replace(/(^\w+:|^)\/\//, '');
             if (currentTab === 'blackboard.sejong.ac.kr/ultra/course'){
-                //$('.no-error').removeClass('hidden');
-                InitView();          
+                sendMessageToBack("POPUP ON");
+                chrome.runtime.onMessage.addListener( (request, sender, sendResponse) =>{
+                    console.log(request.action);
+                    if(request.action === "ON is 1"){
+                        CloseAtd();
+                    }
+                    else if(request.action === "ON is 0"){
+                        InitView();
+                    }
+                })
+                
             } else {
                 $('.wrongSite').removeClass('hidden');
             }
@@ -106,11 +111,12 @@
 
     const ClickRefresh_btn = () => {
         $('#Refresh-btn').click( () =>{
+            ExecuteDelete();
             ExecuteContent();
             $('.Refresh-btn-logo').addClass('logo-rotate');
             setTimeout( ()=>{
                 $('.Refresh-btn-logo').removeClass('logo-rotate');
-            }, 2000);
+            }, 3000);
         })
     }
 
@@ -124,7 +130,6 @@
     
     const main = () => {
         IsUrlRight();
-        CommunicateBack();
         BtnFunction();
     }
 

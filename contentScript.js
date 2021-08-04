@@ -212,7 +212,6 @@
                 }
             })
         })
-        console.log(data);
 
         return data;
     }
@@ -254,7 +253,7 @@
 
     const testDraw = async () =>{      
 
-        let base = `      <li class="base-navigation-button">
+        let base = `      <li class="base-navigation-button" id = 'AtdCheck'>
         <details class="base-navigation-button-content">
           <summary>
           <bb-svg-icon icon="tools" size="medium" aria-hidden="true">
@@ -275,7 +274,7 @@
 
     const sendMessageToBack = () =>{
         chrome.runtime.sendMessage({action: "ON"}, (response) =>{
-            console.log('On AtdWindow');
+            console.log('Response: ', response);
         });
     }
 

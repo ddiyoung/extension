@@ -19,7 +19,8 @@
 			],
 			"js": [
 				"jquery.js",
-				"contentScript.js"
+				"contentScript.js",
+				"DeleteDomScript.js"
 			]
 		}
 	],
@@ -29,7 +30,8 @@
 	"permissions": [
 		"tabs",
 		"<all_urls>",
-		"storage"
+		"storage",
+		"webNavigation"
 	],
 	"content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
 }
