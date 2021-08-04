@@ -104,7 +104,7 @@
                 })
                 
             } else {
-                $('.wrongSite').removeClass('hidden');
+                $('.wrongSite').removeClass('hidden'), $('.developer-container').removeClass('hidden');
             }
         });
     }

@@ -280,14 +280,16 @@ html,
 .check-container,
 .check-btn-container,
 .refresh-div,
-.closeAtd-btn{
+.closeAtd-btn,
+.developer-container{
     display: block;
     width: 332px;
     padding-left: 20px;
     padding-right: 20px;
     overflow: auto;
 }
-.title-container{
+.title-container,
+.developer-container{
     padding-top: 20px;
     overflow: auto;
 }
@@ -322,12 +324,20 @@ html,
 .check-container label input {
     margin-right: 10px;
 }
-.title-container h2 {
+.developer-container p{
+    padding-left: 10px;
+}
+.developer-container h2{
+    padding-bottom: 30px;
+}
+.title-container h2 ,
+.developer-container h2{
     height: 21px;
     font-weight: var(--semi-bold);
     font-size: 18px;
 }
-.title-container h2 {
+.title-container h2,
+.developer-container h2 {
     font-family: Poppins, sans-serif;
     color: var(--base-white);
     letter-spacing: 0.2px;
