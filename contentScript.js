@@ -1,7 +1,10 @@
 {
     const getUserId = () => {
-        const classes = document.getElementById('sidebar-user-name').className;
-        return classes.split(' ')[2].split('course_user')[1];
+        const sidebar_user_name = document.getElementById('sidebar-user-name');
+        if(sidebar_user_name){
+            const classes = sidebar_user_name.className;
+            return classes.split(' ')[2].split('course_user')[1];
+        }
     }
 
     const NowDate = () => {
