@@ -11,32 +11,12 @@
         return new Date().toISOString();
     }
 
-    const getStartDate = () => {
-        const url = `https://blackboard.sejong.ac.kr/learn/api/v1/terms`
-        return new Promise((resolve, reject) =>{
-            $.get(url, ({results}) =>{
-                //const Date = results.pop().startDate;
-                const Date = results[28].startDate;
-                resolve(Date);
-            })
-        })
-    }
-
-    const HowWeek = async () => {
-        //const Now = new Date(NowDate());
-        const Now = new Date('2021-03-15T12:00:00.844Z');
-        const Start = new Date(await getStartDate());
-        const week = parseInt((Now -Start) / 1000 / 60 / 60 / 24 / 7);
-        return week;
-    }
-
     const getCourseIdList = () => {
         const url = `https://blackboard.sejong.ac.kr/learn/api/v1/users/${getUserId()}/memberships?expand=course.effectiveAvailability,course.permissions,courseRole&includeCount=true&limit=10000`;
         return new Promise((resolve, reject) => {
             $.get(url, ({ results }) => {
                 const Now = NowDate();
-                const tmpNow = '2021-03-15T12:00:00.844Z';
-                const refined = results.filter(elem => elem.course.description).filter(elem => elem.course.startDate < tmpNow).filter(elem => elem.course.endDate > tmpNow);
+                const refined = results.filter(elem => elem.course.description).filter(elem => elem.course.startDate < Now).filter(elem => elem.course.endDate > Now);
                 resolve(refined.map(elem => ({
                     courseId: elem.course.courseId,
                     name: elem.course.name,
@@ -149,11 +129,9 @@
     
     const ManufactureData = async (courseIdList) =>{
         const totalCourseData = (await getCourseData(courseIdList)); 
-        const Nowsecond = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
-        const Nowtest = Nowsecond.slice(0, Nowsecond.length -3);
+        const Nowsecond = NowDate().replace(/T/, ' ').replace(/\..+/, '');
+        const Now = Nowsecond.slice(0, Nowsecond.length -3);
         const refined = [];
-    
-        const Now = "2021-03-15 12:00";
     
         totalCourseData.map(elem =>{
             elem.map(e =>{
@@ -224,11 +202,8 @@
 
         const NameList = [...new Set(data.map(elem => elem.Name))];
 
-        const refined = [ (data.filter)];
-        
         let Add = '';
         
-
         const ref = NameList.map(elem => ({
             name: elem,
             arr: [...data.filter(elem2 => elem2.Name === elem)]
