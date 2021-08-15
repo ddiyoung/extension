@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
-	"name": "test Extensions",
-	"description": "Print Hello, World! message",
+	"name": "BlackBoard Helper",
+	"description": "BlackBoard Attendance Helper Extension",
 	"version": "1.0.0",
 	"background": {
 		"scripts": ["background.js"]
