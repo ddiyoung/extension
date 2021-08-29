@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "BlackBoard Helper",
 	"description": "BlackBoard Attendance Helper Extension",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"background": {
 		"scripts": ["background.js"]
 	},
@@ -28,6 +28,7 @@
 		"default_popup": "popup.html"
 	},
 	"permissions": [
+		"tabs",
 		"<all_urls>",
 		"webNavigation"
 	],
