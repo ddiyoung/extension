@@ -29,7 +29,7 @@
 	},
 	"permissions": [
 		"tabs",
-		"<all_urls>",
+		"https://blackboard.sejong.ac.kr/*",
 		"webNavigation"
 	],
 	"content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
