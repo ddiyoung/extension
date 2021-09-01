@@ -203,53 +203,197 @@
         const data = await AddContentId();
 
         const NameList = [...new Set(data.map(elem => elem.Name))];
-
-        let Add = '';
-        
         const ref = NameList.map(elem => ({
             name: elem,
             arr: [...data.filter(elem2 => elem2.Name === elem)]
         }));
+        console.log(ref);
+        const siteMenu = document.getElementById('side-menu');
+        siteMenu.style.transform = 'translateY(600px)';
+        window.addEventListener('scroll', (e) => {
+            siteMenu.style.transform = `translateY(${600 - window.pageYOffset}px)`;
+        });
 
-        ref.map(elem =>{
-            Add += `
-            <details>
-            <summary>${elem.name} (${elem.arr.length}개)</summary>
-            `;
+        const videoUrl = `https://blackboard.sejong.ac.kr/webapps/blackboard/content/listContent.jsp?`;
 
-            Add += elem.arr.map(elem2 => `
-            <div>
-                <a target="_blank" href="https://blackboard.sejong.ac.kr/webapps/blackboard/content/listContent.jsp?course_id=${elem2.Course_Id}&content_id=${elem2.Content_Id}">
-                    <div>${elem2.LectureName}</div>
-                    <div>${elem2.Attendance} ${elem2.DeadLine}</div>
-                    <div>${elem2.week, elem2.pass}</div>
-                </a>
-            </div>`).join('');
+
+        const classBody = document.createElement('div');
+        classBody.style.height = '600px';
+        classBody.style.padding = '30px';
+        classBody.style.boxSizing = 'border-box';
+        classBody.style.backgroundColor = '#cecece';
+        classBody.style.overflowY = 'auto';
+        classBody.style.display = 'flex';
+        classBody.style.flexWrap = 'nowrap';
+
+
+
+
+        const items = ref.map(lecture => {
+            const itemWrapper = document.createElement('div');
+            itemWrapper.style.backgroundColor = '#ededed';
+            itemWrapper.style.padding = '10px';
+            itemWrapper.style.flexDirection = 'column';
+            itemWrapper.style.marginRight = '10px';
+            itemWrapper.style.display = 'inline-block';
+            itemWrapper.style.width = '220px';
+            itemWrapper.style.height = `${32 + 160 * lecture.arr.length + 80}px`;
+            itemWrapper.style.borderRadius = '4px';
+            itemWrapper.style.boxShadow = '0 2px 6px rgba(255, 255, 255, 0.2), 0 2px 6px rgba(255, 255, 255, 0.2)';
+
+
+            const courseName = document.createElement('div');
+            courseName.style.fontSize = '16px';
+            courseName.style.fontWeight = 'bold';
+            courseName.style.overflow = 'hidden';
+            courseName.style.height = '22px';
+            courseName.style.marginBottom = '10px';
+            courseName.style.textOverflow = 'ellipsis';
+            courseName.style.color = `#${Math.floor(Math.random() * 1000)}`;
+            courseName.innerText = lecture.name;
             
-            Add += '</details>';
-        })
-        return Add;
-    }
+            itemWrapper.append(courseName);
 
-    const testDraw = async () =>{      
 
-        let base = `      <li class="base-navigation-button" id = 'AtdCheck'>
-        <details class="base-navigation-button-content">
-          <summary>
-          <bb-svg-icon icon="tools" size="medium" aria-hidden="true">
-              <svg class="svg-icon svg-icon-directive medium-icon default directional-icon" focusable="false" aria-hidden="true" bb-cache-compilation="svg-icon">
-              <use xlink:href="https://blackboard.sejong.ac.kr/ultra/course#icon-medium-tools"></use>
-              </svg>
-              </bb-svg-icon>
-              <span class="link-text" bb-translate="">출석체크</span>
-            </summary>`;
+            const passed = {
+                ...lecture,
+                arr: lecture.arr.filter(course => course.pass === 'P')
+            };
+            const notPassed = {
+                ...lecture,
+                arr: lecture.arr.filter(course => course.pass === 'F')
+            };
 
-        base += await AddBaseDom();
+            const mappedItemsPassed = passed.arr.map(course => {
+                const link = document.createElement('a');
+                link.href = `${videoUrl}course_id=${course.Course_Id}&content_id=${course.Content_Id}`;
+                link.display = 'block';
+                link.target = '_blank';
+                link.style.textDecoration = 'none';
 
-        base += `</details></li>`;
+                const item = document.createElement('div');
+                item.style.height = '150px';
+                item.style.width = '200px';
+                item.style.backgroundColor = 'white';
+                item.style.boxShadow = '0 2px 3px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.1)';
+                item.style.marginBottom = '10px';
+                item.style.padding = '10px';
+                item.style.borderRadius = '4px';
+                item.style.transitionDuration = '300ms';
+                item.style.transitionProperty = 'box-shadow';
+                item.style.color = 'black';
 
-        $("#base_tools").append(base);
-        $("#side-menu").width('500px');
+                item.addEventListener('mouseover', (e) => {
+                    item.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.3)';
+                });
+
+                item.addEventListener('mouseleave', (e) => {
+                    item.style.boxShadow = '0 2px 3px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.1)';
+                });
+
+                const attendance = document.createElement('div');
+                attendance.style.fontSIze = '12px';
+                attendance.innerHTML = `${course.Attendance} ~`;
+                
+                const deadLine = document.createElement('div');
+                deadLine.style.fontSIze = '12px';
+                deadLine.style.color = '#ba3838';
+                deadLine.style.fontWeight = 'bold';
+                deadLine.style.marginBottom = '20px';
+                deadLine.innerHTML = `${course.DeadLine} 까지`;
+                
+                const lectureName = document.createElement('div');
+                lectureName.style.fontSIze = '12px';
+                lectureName.innerHTML = course.LectureName;
+                
+                item.append(attendance);
+                item.append(deadLine);
+                item.append(lectureName);
+                link.append(item);
+
+                return link;
+            });
+
+
+            const mappedItemsNotPassed = notPassed.arr.map(course => {
+                const link = document.createElement('a');
+                link.href = `${videoUrl}course_id=${course.Course_Id}&content_id=${course.Content_Id}`;
+                link.display = 'block';
+                link.target = '_blank';
+                link.style.textDecoration = 'none';
+
+                const item = document.createElement('div');
+                item.style.height = '150px';
+                item.style.width = '200px';
+                item.style.backgroundColor = 'white';
+                item.style.boxShadow = '0 2px 3px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.1)';
+                item.style.marginBottom = '10px';
+                item.style.padding = '10px';
+                item.style.borderRadius = '4px';
+                item.style.transitionDuration = '300ms';
+                item.style.transitionProperty = 'box-shadow';
+                item.style.color = 'black';
+
+                item.addEventListener('mouseover', (e) => {
+                    item.style.boxShadow = '0 2px 8px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.3)';
+                });
+
+                item.addEventListener('mouseleave', (e) => {
+                    item.style.boxShadow = '0 2px 3px rgba(0, 0, 0, 0.1), 0 2px 3px rgba(0, 0, 0, 0.1)';
+                });
+
+                
+                const attendance = document.createElement('div');
+                attendance.style.fontSIze = '12px';
+                attendance.innerHTML = `${course.Attendance} ~`;
+                
+                const deadLine = document.createElement('div');
+                deadLine.style.fontSIze = '12px';
+                deadLine.style.color = '#ba3838';
+                deadLine.style.fontWeight = 'bold';
+                deadLine.style.marginBottom = '20px';
+                deadLine.innerHTML = `${course.DeadLine} 까지`;
+                
+                const lectureName = document.createElement('div');
+                lectureName.style.fontSIze = '12px';
+                lectureName.innerHTML = course.LectureName;
+                
+                item.append(attendance);
+                item.append(deadLine);
+                item.append(lectureName);
+                link.append(item);
+
+                return link;
+            });
+            
+            const passHeader = (pass) => {
+                const el = document.createElement('div')
+                el.style.fontSize = '15px';
+                el.style.fontWeight = 'bold';
+                el.style.color = pass === 'P' ? 'green' : 'red';
+                el.innerHTML = pass === 'P' ? '이미 본' : '봐야 할';
+                return el;
+            };
+            
+            if (notPassed.arr.length) {
+                itemWrapper.append(passHeader('F'));
+                itemWrapper.append(...mappedItemsNotPassed);
+            }
+
+            if (passed.arr.length) {
+                itemWrapper.append(passHeader('P'))
+                itemWrapper.append(...mappedItemsPassed);
+            }
+
+            return itemWrapper;
+        });
+
+        classBody.append(...items);
+
+        const firstChild = document.getElementById('site-wrap');
+        document.body.insertBefore(classBody, firstChild);
+        
+        return 
     }
 
     const sendMessageToBack = () =>{
@@ -260,7 +404,7 @@
 
 
     const main = async () => {
-        await testDraw();
+        await AddBaseDom();
         sendMessageToBack();
     }
 
