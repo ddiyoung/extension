@@ -225,6 +225,7 @@
         classBody.style.overflowY = 'auto';
         classBody.style.display = 'flex';
         classBody.style.flexWrap = 'nowrap';
+        classBody.id = 'classBody';
 
 
 
