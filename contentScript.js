@@ -8,7 +8,9 @@
     }
 
     const NowDate = () => {
-        return new Date().toISOString();
+        const offset = new Date();
+        
+        return (new Date(offset.getTime() - (offset.getTimezoneOffset() * 60000))).toISOString();
     }
 
     const getCourseIdList = () => {
