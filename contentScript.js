@@ -208,25 +208,18 @@
             arr: [...data.filter(elem2 => elem2.Name === elem)]
         }));
         console.log(ref);
-        const siteMenu = document.getElementById('side-menu');
-        siteMenu.style.transform = 'translateY(600px)';
-        window.addEventListener('scroll', (e) => {
-            siteMenu.style.transform = `translateY(${600 - window.pageYOffset}px)`;
-        });
-
+        
         const videoUrl = `https://blackboard.sejong.ac.kr/webapps/blackboard/content/listContent.jsp?`;
-
 
         const classBody = document.createElement('div');
         classBody.style.height = '600px';
         classBody.style.padding = '30px';
         classBody.style.boxSizing = 'border-box';
-        classBody.style.backgroundColor = '#cecece';
-        classBody.style.overflowY = 'auto';
+        classBody.style.backgroundColor = 'white';
         classBody.style.display = 'flex';
         classBody.style.flexWrap = 'nowrap';
+        classBody.style.overflow = 'auto';
         classBody.id = 'classBody';
-
 
 
 
@@ -240,7 +233,7 @@
             itemWrapper.style.width = '220px';
             itemWrapper.style.height = `${32 + 160 * lecture.arr.length + 80}px`;
             itemWrapper.style.borderRadius = '4px';
-            itemWrapper.style.boxShadow = '0 2px 6px rgba(255, 255, 255, 0.2), 0 2px 6px rgba(255, 255, 255, 0.2)';
+            itemWrapper.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.1), 0 2px 6px rgba(0, 0, 0, 0.1)';
 
 
             const courseName = document.createElement('div');
@@ -293,18 +286,18 @@
                 });
 
                 const attendance = document.createElement('div');
-                attendance.style.fontSIze = '12px';
+                attendance.style.fontSize = '12px';
                 attendance.innerHTML = `${course.Attendance} ~`;
                 
                 const deadLine = document.createElement('div');
-                deadLine.style.fontSIze = '12px';
+                deadLine.style.fontSize = '12px';
                 deadLine.style.color = '#ba3838';
                 deadLine.style.fontWeight = 'bold';
                 deadLine.style.marginBottom = '20px';
                 deadLine.innerHTML = `${course.DeadLine} 까지`;
                 
                 const lectureName = document.createElement('div');
-                lectureName.style.fontSIze = '12px';
+                lectureName.style.fontSize = '12px';
                 lectureName.innerHTML = course.LectureName;
                 
                 item.append(attendance);
@@ -345,18 +338,18 @@
 
                 
                 const attendance = document.createElement('div');
-                attendance.style.fontSIze = '12px';
+                attendance.style.fontSize = '12px';
                 attendance.innerHTML = `${course.Attendance} ~`;
                 
                 const deadLine = document.createElement('div');
-                deadLine.style.fontSIze = '12px';
+                deadLine.style.fontSize = '12px';
                 deadLine.style.color = '#ba3838';
                 deadLine.style.fontWeight = 'bold';
                 deadLine.style.marginBottom = '20px';
                 deadLine.innerHTML = `${course.DeadLine} 까지`;
                 
                 const lectureName = document.createElement('div');
-                lectureName.style.fontSIze = '12px';
+                lectureName.style.fontSize = '12px';
                 lectureName.innerHTML = course.LectureName;
                 
                 item.append(attendance);
@@ -371,8 +364,8 @@
                 const el = document.createElement('div')
                 el.style.fontSize = '15px';
                 el.style.fontWeight = 'bold';
-                el.style.color = pass === 'P' ? 'green' : 'red';
-                el.innerHTML = pass === 'P' ? '이미 본' : '봐야 할';
+                el.style.color = pass === 'P' ? '#33a643' : '#ba3838';
+                el.innerHTML = pass === 'P' ? 'Pass' : 'Non-Pass';
                 return el;
             };
             
@@ -391,8 +384,8 @@
 
         classBody.append(...items);
 
-        const firstChild = document.getElementById('site-wrap');
-        document.body.insertBefore(classBody, firstChild);
+        const firstChild = document.querySelector('.base-courses-container > header');
+        document.querySelector('.base-courses-container').insertBefore(classBody, firstChild);
         
         return 
     }
@@ -407,6 +400,7 @@
     const main = async () => {
         await AddBaseDom();
         sendMessageToBack();
+        detectUrlChanged();
     }
 
     main();
