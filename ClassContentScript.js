@@ -11,19 +11,16 @@
         Separate(){
             const idxSlash = this.contentname.lastIndexOf('/');
             this.lecturename = this.contentname.slice(0, idxSlash);
-            const duedate = this.contentname(idxSlash+1, this.contentname.length).split('~');
+            const duedate = this.contentname.slice(idxSlash+1, this.contentname.length).split('~');
             this.attendance = duedate[0].trim();
             this.deadline = duedate[1].trim();
         }
     }
 
-    class LectureInfo{
+    class LectureInfo extends SeparateContentName{
         constructor() {
             this.id = "";
             this.week = "";
-            this.lecturename = "";
-            this.attendance = "";
-            this.deadline = "";
             this.pass = "";
             this.content_id = "";
         }
