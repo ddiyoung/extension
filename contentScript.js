@@ -28,7 +28,7 @@
         });
     }
 
-    const getContentId = async (courseId, week) => {
+    const getContentId = async (courseId, lectureName) => {
         const url = `https://blackboard.sejong.ac.kr/webapps/blackboard/execute/course/menuFolderViewGenerator`;
         const parm = {
             initTree : 'true',
@@ -37,14 +37,22 @@
             displayMode : 'courseLinkPicker',
             content_id : ''
         };
+
         
         const Course_Id = courseId;
         return new Promise((resolve, reject) =>{
             $.post(url, parm, ({children}) =>{
+                const tmp = children[0].children.filter(elem => elem.children.length !== 0);
+
+                const result = [];
+                tmp.filter(elem => elem.children.filter(e => console.log(e.children, e.children.length)))
+
+                console.log(tmp);
+
                 for(let i = 0 ; i < children[0].children.length; i++){
                     if(children[0].children[i].children.length !== 0){
                         if(children[0].children[i].children[0].contents.indexOf('title=\"공지\"') !== -1){
-                            const idStr = children[0].children[i].children[week].id;
+                            const idStr = children[0].children[i].children[0].id;
                             const Content_Id = idStr.slice(idStr.lastIndexOf(':')+1, idStr.length);
                             const refined = {Content_Id, Course_Id};
                             resolve(refined);
@@ -91,14 +99,15 @@
         return ({LectureName, Attendance, DeadLine});
     };
 
-    const getContentData = async (courseIdList) => {
+    const getContentData = async (courseIdList, LectureNameList) => {
         const Course_Id = courseIdList[0];
+        const LectureName = LectureNameList[0];
         const refined = [];
 
         await new Promise((resolve, reject) =>{
             for(let i = 0; i < Course_Id.length; i++){
                 setTimeout(async () =>{
-                    refined.push(await getContentId(Course_Id[i], 0));
+                    refined.push(await getContentId(Course_Id[i], LectureName[i]));
                 }, i * 100);
             }
 
@@ -179,8 +188,11 @@
         const data = window.P? await CompleteData(merged.map(elem => elem.id)) : await NpData(merged.map(elem => elem.id));
 
         const Course_Id_List = [];
-        Course_Id_List.push(merged.map(elem => elem.Course_Id));
-        const Content_data = await getContentData(Course_Id_List);
+        Course_Id_List.push(data.map(elem => elem.Course_Id));
+        const LectureName_List = [];
+        LectureName_List.push(data.map(elem => elem.LectureName));
+
+        const Content_data = await getContentData(Course_Id_List, LectureName_List);
         let week;
         data.map(elem =>{
             Content_data.map(e =>{
@@ -207,7 +219,6 @@
             name: elem,
             arr: [...data.filter(elem2 => elem2.Name === elem)]
         }));
-        console.log(ref);
         
         const videoUrl = `https://blackboard.sejong.ac.kr/webapps/blackboard/content/listContent.jsp?`;
 
