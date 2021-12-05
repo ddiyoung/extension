@@ -53,7 +53,7 @@
                 )))
                 const idStr = results[0].id;
                 const Content_Id = idStr.slice(idStr.lastIndexOf(':')+1, idStr.length);
-                const refined = {Content_Id, Course_Id};
+                const refined = {Content_Id, Course_Id, lectureName};
                 resolve(refined);
             })
         })
@@ -189,9 +189,11 @@
         LectureName_List.push(data.map(elem => elem.LectureName));
 
         const Content_data = await getContentData(Course_Id_List, LectureName_List);
+
+        console.log(Content_data.length);
         data.map(elem =>{
             Content_data.map(e =>{
-                if(elem.Course_Id === e.Course_Id){
+                if(elem.LectureName === e.lectureName){
                     const Split = e.Content_Id.split('_');
                     const Content = parseInt(Split[1]);
                     const id = {
