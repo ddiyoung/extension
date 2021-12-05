@@ -42,23 +42,19 @@
         const Course_Id = courseId;
         return new Promise((resolve, reject) =>{
             $.post(url, parm, ({children}) =>{
-                const tmp = children[0].children.filter(elem => elem.children.length !== 0);
+                const results = []
 
-                const result = [];
-                tmp.filter(elem => elem.children.filter(e => console.log(e.children, e.children.length)))
-
-                console.log(tmp);
-
-                for(let i = 0 ; i < children[0].children.length; i++){
-                    if(children[0].children[i].children.length !== 0){
-                        if(children[0].children[i].children[0].contents.indexOf('title=\"공지\"') !== -1){
-                            const idStr = children[0].children[i].children[0].id;
-                            const Content_Id = idStr.slice(idStr.lastIndexOf(':')+1, idStr.length);
-                            const refined = {Content_Id, Course_Id};
-                            resolve(refined);
+                children[0].children.map(elem=>elem.children.map(e=>e.children.map(
+                    e2 =>{
+                        if(e2.contents.indexOf(lectureName) !== -1){
+                            results.push(e);
                         }
                     }
-                }
+                )))
+                const idStr = results[0].id;
+                const Content_Id = idStr.slice(idStr.lastIndexOf(':')+1, idStr.length);
+                const refined = {Content_Id, Course_Id};
+                resolve(refined);
             })
         })
     }
@@ -193,13 +189,11 @@
         LectureName_List.push(data.map(elem => elem.LectureName));
 
         const Content_data = await getContentData(Course_Id_List, LectureName_List);
-        let week;
         data.map(elem =>{
             Content_data.map(e =>{
                 if(elem.Course_Id === e.Course_Id){
-                    week = elem.week[0];
                     const Split = e.Content_Id.split('_');
-                    const Content = parseInt(Split[1]) + parseInt(week);
+                    const Content = parseInt(Split[1]);
                     const id = {
                         Content_Id : '_'+Content +'_1'
                     }
