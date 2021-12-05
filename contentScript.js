@@ -109,7 +109,7 @@
 
             setTimeout(() =>{
                 resolve();
-            }, 1000);
+            }, 100 * (Course_Id.length));
         })
 
         return refined;
@@ -128,7 +128,7 @@
             
             setTimeout(()=>{
                 resolve();
-            }, 2000);
+            }, 150 * (CourseList.length + 1));
         })
         
         return refined;
@@ -190,7 +190,6 @@
 
         const Content_data = await getContentData(Course_Id_List, LectureName_List);
 
-        console.log(Content_data.length);
         data.map(elem =>{
             Content_data.map(e =>{
                 if(elem.LectureName === e.lectureName){
