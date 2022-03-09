@@ -28,6 +28,13 @@
         });
     }
 
+    const slicecontents = (contents) => {
+        const Idxtag = contents.indexOf('>');
+        const lastIdxtag = contents.lastIndexOf('<');
+        const LecturName = contents.slice(Idxtag+1, lastIdxtag);
+        return LecturName;
+    }
+
     const getContentId = async (courseId, lectureName) => {
         const url = `https://blackboard.sejong.ac.kr/webapps/blackboard/execute/course/menuFolderViewGenerator`;
         const parm = {
@@ -47,7 +54,14 @@
                 children[0].children.map(elem=>elem.children.map(e=>e.children.map(
                     e2 =>{
                         if(e2.contents.indexOf(lectureName) !== -1){
-                            results.push(e);
+
+                            const contentname = slicecontents(e2.contents);
+                            const Duedate = getDateForm(contentname);
+                            const Nowsecond = NowDate().replace(/T/, ' ').replace(/\..+/, '');
+                            const Now = Nowsecond.slice(0, Nowsecond.length -3);
+                            if(Duedate.Attendance <= Now && Now <= Duedate.DeadLine){
+                                results.push(e2);
+                            }
                         }
                     }
                 )))
