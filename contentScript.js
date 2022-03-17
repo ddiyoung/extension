@@ -104,7 +104,14 @@
         const LectureName = contentname.slice(0, IdxSlash);
         const DueDate = contentname.slice(IdxSlash+1, contentname.length).split('~');
         const Attendance = DueDate[0].trim();
-        const DeadLine = DueDate[1].trim();
+        let DeadLine;
+        if(DueDate[1]){
+            DeadLine = DueDate[1].trim();
+        }
+        else{
+            DeadLine = Attendance;
+        }
+        
     
         return ({LectureName, Attendance, DeadLine});
     };
