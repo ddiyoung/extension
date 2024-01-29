@@ -19,22 +19,22 @@
 
 ### 세종대학교 블랙보드 바로가기
 
-![image](https://cf-ea.everytime.kr/attach/699/42648508/everytime-web-1631175267463.jpg?Expires=1688221368&Key-Pair-Id=APKAICU6XZKH23IGASFA&Signature=MlyGyR~atTv5nIhO13ebDK8VCj~YORavSi4wVpwUlF2R2rGDR0DVA74AQhcrSEr7n0f9oY4kfKt4R1tpAiUnxDlw9Pc57UuTha63IODN7pHaGgk-Gqn29A5VK4VPlIcTFGj9JFF2h6jTj8OQfpOmRuraPqYxJgAGXTBEhl80jwYy-J-vyoBHP~-y8v-TUGgmsDI3xMbRRyu0emIv4X2NsA8r6nh-nfYnyjIkK8bZZI7VN0yWPmKFxs~2lBPofn5md3ww0c714FU1gOnQY~vuyJJxD~V6PO4i8joc4cSr8VXiRibQpyAIuQgvjXJwh8Fk92xHFcBXXbc5l6ascx0u-Q__)
+![image](https://github.com/ddiyoung/extension/blob/master/github_IMG/Intro.jpg?raw=true)
   - 개발자들 소개 및 바로가기 버튼입니다.
 
 ### 출석 확인하기
 
-![image](https://cf-ea.everytime.kr/attach/998/42648512/everytime-web-1631175272138.jpg?Expires=1688221368&Key-Pair-Id=APKAICU6XZKH23IGASFA&Signature=Ho~j-3psnnm9M8Si6-~Za7K3ilcPYp6qjK2UsD7WmbGgKLsGGNYY7FYNZAftqQfAxLpBA2geyUHciHdvATOSWQYtEoo~J~mZMUE7bSge1UO7dV8tMYZu3vNlRC9-OFUqY41bX2UaRSvHi1CuMv7b2YOoDKbxJajmXOjV21kHoDNyOPYPb5SEY3qXoN7nxnzigSf~Emsl-hQMrCDFFIsUSH--T2yes~QM35rkGzT5S5ZXmm63raahCaffIokHMhwPWtSDBuSyEKmfymoupfI5Oy8Sk6PdY-lR9njnnyHIoXEAWcTNQamv6nxrJ1LMLc8DrUuQpub48wRc3sgFrNDhqw__)
+![image](https://github.com/ddiyoung/extension/blob/master/github_IMG/Check_attendance.jpg?raw=true)
 
 #### 모든 강의 출석하기 버튼과 출석 확인하기 버튼이 있습니다.
 
   - 모든 강의 출석하기 버튼을 설정시 이미 출석한 강의들의 출석 현황을 볼 수 있습니다.
 
-<img src="https://cf-ea.everytime.kr/attach/565/42648523/everytime-web-1631175281004.jpg?Expires=1688221368&Key-Pair-Id=APKAICU6XZKH23IGASFA&Signature=ZFrrQk9Di0Dr5lL9jPwOLHIsDJWkb295fEEPdG3LSMMuI3LGcEwazrDzFLHfrr1zmWWzkxTL-3lyj84e29rzbKT2hPzzZWC7lf9C-1Ya0eQQwKqsgcnL4GaUltE3YDPbQe6q4bkEOT~hfbXzEAcLTuGZ9-gDVeVvTV4TyX-sMhx-cWlL9XqmU9KKl77sItcBYktpdbMrgaTDlZnA9hd5kURPbJ1fEOlRFIj~oj2YSIYEnidXwtYBzGy2ZQOCQSv9LIlcqLBxcMIeHa88IuTLM3RB9bohPcKrVF79defCrJYtOreGL85DWG1Px0wAv5lg7xNEyL-f27dKAa9zETgIrg__" />
+<img src="https://github.com/ddiyoung/extension/blob/master/github_IMG/option.jpg?raw=true" />
 
   - 모든 강의 출석하기 버튼을 해제시 출석하지 않은 강의들만 카드에 뜨게 됩니다.
 
-<img src="https://cf-ea.everytime.kr/attach/655/42648518/everytime-web-1631175276172.jpg?Expires=1688221368&Key-Pair-Id=APKAICU6XZKH23IGASFA&Signature=P36cttAYQgE5mP9g4EDhsO2pgt0d5s67DJdFxvBCBXVsL1p5wAed-i6n11n~lKkn7B5USq5fTx4nuj4U-Ogf8MXQIKIFfPOBJ-rTmBnXuNugns0UbZ2MNS45Cv1zmESGqaNsebtK79CVycwh6YvCNTGxpBTXbbQnOrRkkaUvYwITijiT8ntZuKC-z9O3fVSOxp8FcsD6egB1DMvi-TnUUXEUBG4lEpcJ3yKjJX~7v8vExu9vwRs1vi~9RKFMSevBw-blxx0MY-zYYFUgVg1qphHyqzdfIswQKTWvbCgFVCLFGomVUGGbd0n4uNrhkombJ6ywHzMgTOKUGyoqNpB~uA__"/>
+<img src="https://github.com/ddiyoung/extension/blob/master/github_IMG/lecture_card.jpg?raw=true"/>
 
 ### 강의 바로 이동하기
 
